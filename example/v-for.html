@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>v-for</title>
+    <script src="../assets/js/vue.js"></script>
+</head>
+<body>
+<h1>v-for</h1>
+<hr>
+<div id="app">
+    <!--
+     希望li循环所以把v-if写在li上
+    -->
+   <ul>
+       <li v-for="item in sortItems">{{item}}</li>
+   </ul>
+    <hr>
+    <ul>
+        <li v-for="(student,index) in sortStudents">
+            {{index+1}}:{{student.name}}的年龄是{{student.age}}</li>
+    </ul>
+</div>
+<script>
+    /*Vue的内部指令*/
+    var app = new Vue({
+        el:'#app',
+        data:{
+            items:[56,90,89,58,70,8],
+            students:[
+                {name:'xiaoMing',age:12},
+                {name:'liLi',age:23},
+                {name:'laLa',age:4},
+                {name:'wuLa',age:16}
+            ]
+        },
+        computed:{
+            sortItems:function () {
+                return this.items.sort(sortNumber);
+            },
+            sortStudents:function () {
+                return sortByKey(this.students,'age');//根据年龄排序
+            }
+        }
+    })
+    //js数字排序
+    function sortNumber(a,b) {
+        return a-b;
+    }
+    //js 数组对象的排序方法
+    function sortByKey(array,key) {
+        return array.sort(function (a,b) {
+            var x = a[key];
+            var y = b[key];
+            return ((x<y)?-1:((x>y)?1:0));//x<y为-1，x>y为1，x=y为0
+        });
+
+    }
+</script>
+</body>
+</html>
